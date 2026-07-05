@@ -1,0 +1,781 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Akaash K — Java Backend Developer</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600;700&family=IBM+Plex+Sans:wght@400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      :root {
+        --bg: #0b1420;
+        --panel: #101c2c;
+        --panel-2: #14263a;
+        --line: #1f3247;
+        --text: #e7ecf3;
+        --muted: #7e90a6;
+        --muted-2: #566779;
+        --accent: #f5a623;
+        --accent-dim: #8a6423;
+        --ok: #3ed598;
+        --ok-dim: #1b5b45;
+        --mono: "IBM Plex Mono", monospace;
+        --sans: "IBM Plex Sans", sans-serif;
+      }
+      * {
+        box-sizing: border-box;
+      }
+      html {
+        scroll-behavior: smooth;
+      }
+      body {
+        margin: 0;
+        background: var(--bg);
+        color: var(--text);
+        font-family: var(--sans);
+        line-height: 1.6;
+      }
+      a {
+        color: inherit;
+      }
+      .wrap {
+        max-width: 920px;
+        margin: 0 auto;
+        padding: 0 24px;
+      }
+
+      /* ---------- NAV ---------- */
+      nav {
+        position: sticky;
+        top: 0;
+        z-index: 50;
+        background: rgba(11, 20, 32, 0.88);
+        backdrop-filter: blur(8px);
+        border-bottom: 1px solid var(--line);
+      }
+      nav .wrap {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        height: 56px;
+      }
+      .brand {
+        font-family: var(--mono);
+        font-weight: 600;
+        font-size: 14px;
+        letter-spacing: 0.02em;
+        color: var(--text);
+        text-decoration: none;
+      }
+      .brand span {
+        color: var(--accent);
+      }
+      .navlinks {
+        display: flex;
+        gap: 22px;
+        font-family: var(--mono);
+        font-size: 12.5px;
+        color: var(--muted);
+      }
+      .navlinks a {
+        text-decoration: none;
+        transition: color 0.15s;
+      }
+      .navlinks a:hover {
+        color: var(--accent);
+      }
+      @media (max-width: 640px) {
+        .navlinks {
+          display: none;
+        }
+      }
+
+      /* ---------- HERO ---------- */
+      header.hero {
+        padding: 72px 0 40px;
+        border-bottom: 1px solid var(--line);
+      }
+      .eyebrow {
+        font-family: var(--mono);
+        font-size: 12px;
+        color: var(--ok);
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        margin-bottom: 18px;
+        letter-spacing: 0.04em;
+      }
+      .dot {
+        width: 7px;
+        height: 7px;
+        border-radius: 50%;
+        background: var(--ok);
+        box-shadow: 0 0 0 0 rgba(62, 213, 152, 0.6);
+        animation: pulse 2s infinite;
+      }
+      @keyframes pulse {
+        0% {
+          box-shadow: 0 0 0 0 rgba(62, 213, 152, 0.5);
+        }
+        70% {
+          box-shadow: 0 0 0 7px rgba(62, 213, 152, 0);
+        }
+        100% {
+          box-shadow: 0 0 0 0 rgba(62, 213, 152, 0);
+        }
+      }
+      h1 {
+        font-family: var(--mono);
+        font-size: clamp(30px, 5vw, 46px);
+        font-weight: 700;
+        margin: 0 0 10px;
+        letter-spacing: -0.01em;
+      }
+      .role {
+        font-size: 18px;
+        color: var(--muted);
+        margin: 0 0 22px;
+        font-weight: 500;
+      }
+      .role b {
+        color: var(--text);
+        font-weight: 600;
+      }
+      .summary {
+        max-width: 620px;
+        color: #b9c4d2;
+        font-size: 15.5px;
+        margin-bottom: 28px;
+      }
+      .contact-row {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 10px;
+      }
+      .pill {
+        font-family: var(--mono);
+        font-size: 12.5px;
+        color: var(--text);
+        border: 1px solid var(--line);
+        background: var(--panel);
+        padding: 8px 14px;
+        border-radius: 6px;
+        text-decoration: none;
+        display: inline-flex;
+        align-items: center;
+        gap: 7px;
+        transition: border-color 0.15s, transform 0.15s;
+      }
+      .pill:hover {
+        border-color: var(--accent);
+        transform: translateY(-1px);
+      }
+
+      /* ---------- STATUS BOARD (signature element) ---------- */
+      .board {
+        padding: 36px 0;
+        border-bottom: 1px solid var(--line);
+      }
+      .board-title {
+        font-family: var(--mono);
+        font-size: 11.5px;
+        color: var(--muted-2);
+        text-transform: uppercase;
+        letter-spacing: 0.12em;
+        margin-bottom: 14px;
+      }
+      .services {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+        gap: 1px;
+        background: var(--line);
+        border: 1px solid var(--line);
+        border-radius: 8px;
+        overflow: hidden;
+      }
+      .service {
+        background: var(--panel);
+        padding: 16px 18px;
+      }
+      .service-top {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 8px;
+      }
+      .service-name {
+        font-family: var(--mono);
+        font-size: 13px;
+        color: var(--text);
+        font-weight: 500;
+      }
+      .status-tag {
+        font-family: var(--mono);
+        font-size: 10.5px;
+        color: var(--ok);
+        background: rgba(62, 213, 152, 0.08);
+        border: 1px solid var(--ok-dim);
+        padding: 2px 7px;
+        border-radius: 4px;
+      }
+      .service-meta {
+        font-family: var(--mono);
+        font-size: 11px;
+        color: var(--muted-2);
+      }
+
+      /* ---------- SECTIONS ---------- */
+      section {
+        padding: 56px 0;
+        border-bottom: 1px solid var(--line);
+      }
+      section:last-of-type {
+        border-bottom: none;
+      }
+      .sec-head {
+        display: flex;
+        align-items: baseline;
+        gap: 12px;
+        margin-bottom: 28px;
+      }
+      .sec-num {
+        font-family: var(--mono);
+        color: var(--accent-dim);
+        font-size: 13px;
+      }
+      .sec-title {
+        font-family: var(--mono);
+        font-size: 20px;
+        font-weight: 600;
+        color: var(--text);
+        margin: 0;
+      }
+
+      /* skills */
+      .skill-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+        gap: 20px;
+      }
+      .skill-card {
+        background: var(--panel);
+        border: 1px solid var(--line);
+        border-radius: 8px;
+        padding: 18px 20px;
+      }
+      .skill-cat {
+        font-family: var(--mono);
+        font-size: 11.5px;
+        color: var(--accent);
+        text-transform: uppercase;
+        letter-spacing: 0.08em;
+        margin-bottom: 10px;
+      }
+      .tag-row {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 6px;
+      }
+      .tag {
+        font-family: var(--mono);
+        font-size: 11.5px;
+        color: #c7d1de;
+        background: var(--panel-2);
+        border: 1px solid var(--line);
+        padding: 4px 9px;
+        border-radius: 5px;
+      }
+
+      /* experience */
+      .job {
+        position: relative;
+        padding-left: 26px;
+        margin-bottom: 38px;
+      }
+      .job:last-child {
+        margin-bottom: 0;
+      }
+      .job::before {
+        content: "";
+        position: absolute;
+        left: 0;
+        top: 6px;
+        width: 9px;
+        height: 9px;
+        border-radius: 50%;
+        background: var(--accent);
+      }
+      .job::after {
+        content: "";
+        position: absolute;
+        left: 4px;
+        top: 16px;
+        bottom: -38px;
+        width: 1px;
+        background: var(--line);
+      }
+      .job:last-child::after {
+        display: none;
+      }
+      .job-head {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: space-between;
+        gap: 8px;
+        margin-bottom: 4px;
+      }
+      .job-title {
+        font-weight: 600;
+        font-size: 16px;
+        color: var(--text);
+      }
+      .job-time {
+        font-family: var(--mono);
+        font-size: 12px;
+        color: var(--muted-2);
+      }
+      .job-sub {
+        font-family: var(--mono);
+        font-size: 12.5px;
+        color: var(--muted);
+        margin-bottom: 12px;
+      }
+      .job ul {
+        margin: 0;
+        padding-left: 18px;
+        color: #b9c4d2;
+        font-size: 14.5px;
+      }
+      .job li {
+        margin-bottom: 7px;
+      }
+      .job li::marker {
+        color: var(--accent-dim);
+      }
+
+      /* projects */
+      .project {
+        background: var(--panel);
+        border: 1px solid var(--line);
+        border-radius: 8px;
+        padding: 22px 24px;
+      }
+      .project-title {
+        font-weight: 600;
+        font-size: 16px;
+        margin-bottom: 4px;
+      }
+      .project-tags {
+        font-family: var(--mono);
+        font-size: 11.5px;
+        color: var(--accent);
+        margin-bottom: 12px;
+      }
+      .project p {
+        color: #b9c4d2;
+        font-size: 14.5px;
+        margin: 0;
+      }
+
+      /* education / certs */
+      .two-col {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 36px;
+      }
+      @media (max-width: 700px) {
+        .two-col {
+          grid-template-columns: 1fr;
+        }
+      }
+      .edu-title {
+        font-weight: 600;
+        font-size: 15px;
+        margin-bottom: 3px;
+      }
+      .edu-sub {
+        font-family: var(--mono);
+        font-size: 12.5px;
+        color: var(--muted);
+        margin-bottom: 2px;
+      }
+      .edu-meta {
+        font-size: 13.5px;
+        color: #b9c4d2;
+      }
+      .cert-list {
+        list-style: none;
+        margin: 0;
+        padding: 0;
+      }
+      .cert-list li {
+        display: flex;
+        gap: 10px;
+        align-items: flex-start;
+        font-size: 14.5px;
+        color: #b9c4d2;
+        margin-bottom: 12px;
+      }
+      .cert-list li::before {
+        content: "▸";
+        color: var(--accent);
+        font-family: var(--mono);
+      }
+
+      /* footer */
+      footer {
+        padding: 44px 0 60px;
+        text-align: center;
+      }
+      footer .brand-line {
+        font-family: var(--mono);
+        font-size: 13px;
+        color: var(--muted);
+        margin-bottom: 16px;
+      }
+      footer .contact-row {
+        justify-content: center;
+      }
+      .fine {
+        font-family: var(--mono);
+        font-size: 11px;
+        color: var(--muted-2);
+        margin-top: 30px;
+      }
+    </style>
+  </head>
+  <body>
+    <nav>
+      <div class="wrap">
+        <a class="brand" href="#top">akaash<span>.k</span></a>
+        <div class="navlinks">
+          <a href="#experience">experience</a>
+          <a href="#skills">skills</a>
+          <a href="#projects">projects</a>
+          <a href="#education">education</a>
+          <a href="#contact">contact</a>
+        </div>
+      </div>
+    </nav>
+
+    <header class="hero" id="top">
+      <div class="wrap">
+        <div class="eyebrow">
+          <span class="dot"></span> Currently working at Virtusa, for Citi
+          Project
+        </div>
+        <h1>Akaash K</h1>
+        <p class="role">
+          Java Backend Developer — <b>Spring Boot</b> · <b>Microservices</b> ·
+          <b>REST APIs</b> · <b>MongoDB</b>
+        </p>
+        <p class="summary">
+          Results-driven Java Backend Developer with 2+ years of experience
+          building high-throughput, distributed microservices in the banking
+          domain (Citi). Proficient in Java 8/11/17, Spring Boot, REST APIs,
+          MongoDB, and Solace PubSub+ for event driven async messaging. Skilled
+          in CI/CD automation (Jenkins, Harness, UDeploy), SOLID principles, and
+          design patterns. Actively leverages AI tools (GitHub Copilot, Claude
+          AI) for accelerated development and automated unit testing. Strong
+          collaborator in Agile/Scrum environments with a proven track record of
+          zero critical deployment failures.
+        </p>
+        <div class="contact-row">
+          <a class="pill" href="mailto:akaashk462@gmail.com"
+            >✉ akaashk462@gmail.com</a
+          >
+          <a class="pill" href="tel:+918939812792">☎ +91 89398 12792</a>
+          <a
+            class="pill"
+            href="https://linkedin.com/in/akaash-k-241471203"
+            target="_blank"
+            rel="noopener"
+            >in/akaash-k</a
+          >
+          <span class="pill">📍 Chennai, India</span>
+        </div>
+      </div>
+    </header>
+
+    <div class="board">
+      <div class="wrap">
+        <div class="board-title">
+          // stack status — what's running in production
+        </div>
+        <div class="services">
+          <div class="service">
+            <div class="service-top">
+              <span class="service-name">banking-rest-api</span
+              ><span class="status-tag">stable</span>
+            </div>
+            <div class="service-meta">Java 17 · Spring Boot</div>
+          </div>
+          <div class="service">
+            <div class="service-top">
+              <span class="service-name">solace-pubsub</span
+              ><span class="status-tag">stable</span>
+            </div>
+            <div class="service-meta">event-driven messaging</div>
+          </div>
+          <div class="service">
+            <div class="service-top">
+              <span class="service-name">mongodb-cluster</span
+              ><span class="status-tag">stable</span>
+            </div>
+            <div class="service-meta">indexed · query-tuned</div>
+          </div>
+          <div class="service">
+            <div class="service-top">
+              <span class="service-name">ci-cd-pipeline</span
+              ><span class="status-tag">stable</span>
+            </div>
+            <div class="service-meta">Jenkins · UDeploy · 0 critical fails</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <section id="experience">
+      <div class="wrap">
+        <div class="sec-head">
+          <span class="sec-num">01</span>
+          <h2 class="sec-title">Experience</h2>
+        </div>
+
+        <div class="job">
+          <div class="job-head">
+            <span class="job-title"
+              >Associate Software Engineer — Virtusa (Client: Citi)</span
+            >
+            <span class="job-time">Jan 2024 – Present</span>
+          </div>
+          <div class="job-sub">
+            Banking Domain · Java · Spring Boot · MongoDB · Solace PubSub+ ·
+            Jenkins · UDeploy
+          </div>
+          <ul>
+            <li>
+              Designed and developed RESTful backend microservices using Java 17
+              and Spring Boot to handle high-throughput banking transaction
+              workflows in a distributed architecture.
+            </li>
+            <li>
+              Integrated Solace PubSub+ for asynchronous, event-driven
+              inter-service communication — improving decoupling, fault
+              tolerance, and resilience.
+            </li>
+            <li>
+              Optimised MongoDB data models, indexing strategies, and query
+              execution plans, reducing API response latency and boosting
+              service performance.
+            </li>
+            <li>
+              Refactored legacy modules applying SOLID principles, Factory and
+              Singleton patterns, cutting technical debt and improving
+              maintainability.
+            </li>
+            <li>
+              Built and maintained CI/CD pipelines with Jenkins and UDeploy,
+              achieving zero critical deployment failures across SIT and UAT.
+            </li>
+            <li>
+              Used GitHub Copilot to accelerate code optimisation and automate
+              unit test generation (JUnit, Mockito, TestNG), lifting test
+              coverage and velocity.
+            </li>
+            <li>
+              Monitored service health and logs across dev, SIT, UAT, and
+              production to ensure uptime and fast incident resolution.
+            </li>
+            <li>
+              Active in Agile/Scrum ceremonies and peer code reviews to maintain
+              code quality.
+            </li>
+          </ul>
+        </div>
+
+        <div class="job">
+          <div class="job-head">
+            <span class="job-title">Backend Developer Intern — Virtusa</span>
+            <span class="job-time">May 2023 – Aug 2023</span>
+          </div>
+          <div class="job-sub">
+            Online Course Management System · Java · Spring Boot · REST APIs ·
+            MySQL
+          </div>
+          <ul>
+            <li>
+              Built RESTful APIs from scratch to manage courses, users,
+              enrolments, and assignments, with full input validation and
+              structured error handling.
+            </li>
+            <li>
+              Designed normalised relational schemas in MySQL with referential
+              integrity constraints and optimised indexing for query performance
+              at scale.
+            </li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <section id="skills">
+      <div class="wrap">
+        <div class="sec-head">
+          <span class="sec-num">02</span>
+          <h2 class="sec-title">Technical Skills</h2>
+        </div>
+        <div class="skill-grid">
+          <div class="skill-card">
+            <div class="skill-cat">Languages</div>
+            <div class="tag-row">
+              <span class="tag">Java 8</span><span class="tag">Java 11</span
+              ><span class="tag">Java 17</span> <span class="tag">SQL</span
+              ><span class="tag">Linux / Bash</span>
+              <span class="tag">DSA</span>
+            </div>
+          </div>
+          <div class="skill-card">
+            <div class="skill-cat">Frameworks &amp; APIs</div>
+            <div class="tag-row">
+              <span class="tag">Spring Boot</span
+              ><span class="tag">Spring MVC</span>
+              <span class="tag">Spring Data JPA</span
+              ><span class="tag">REST APIs</span>
+              <span class="tag">Microservices</span>
+              <span class="tag">Design Patterns</span>
+            </div>
+          </div>
+          <div class="skill-card">
+            <div class="skill-cat">Databases</div>
+            <div class="tag-row">
+              <span class="tag">MongoDB</span><span class="tag">MySQL</span>
+              <span class="tag">Query Optimisation</span
+              ><span class="tag">Indexing</span>
+            </div>
+          </div>
+          <div class="skill-card">
+            <div class="skill-cat">Messaging / Streaming</div>
+            <div class="tag-row">
+              <span class="tag">Solace PubSub+</span
+              ><span class="tag">Apache Kafka (basics)</span>
+            </div>
+          </div>
+          <div class="skill-card">
+            <div class="skill-cat">Testing</div>
+            <div class="tag-row">
+              <span class="tag">JUnit</span><span class="tag">Mockito</span
+              ><span class="tag">TestNG</span>
+            </div>
+          </div>
+          <div class="skill-card">
+            <div class="skill-cat">DevOps &amp; CI/CD</div>
+            <div class="tag-row">
+              <span class="tag">Jenkins</span><span class="tag">UDeploy</span
+              ><span class="tag">Harness</span>
+              <span class="tag">Lightspeed</span
+              ><span class="tag">GitHub Actions</span
+              ><span class="tag">Ansible</span><span class="tag">Docker</span>
+            </div>
+          </div>
+          <div class="skill-card">
+            <div class="skill-cat">Tools &amp; Platforms</div>
+            <div class="tag-row">
+              <span class="tag">Git</span><span class="tag">GitHub</span
+              ><span class="tag">BitBucket</span>
+              <span class="tag">Postman</span
+              ><span class="tag">IntelliJ IDEA</span
+              ><span class="tag">GitHub Copilot</span>
+            </div>
+          </div>
+          <div class="skill-card">
+            <div class="skill-cat">Concepts</div>
+            <div class="tag-row">
+              <span class="tag">SOLID</span
+              ><span class="tag">Factory Pattern</span
+              ><span class="tag">Singleton Pattern</span>
+              <span class="tag">Agile / Scrum</span
+              ><span class="tag">Code Reviews</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="projects">
+      <div class="wrap">
+        <div class="sec-head">
+          <span class="sec-num">03</span>
+          <h2 class="sec-title">Key Projects</h2>
+        </div>
+        <div class="project">
+          <div class="project-title">
+            Banking Domain Microservices — Virtusa (Client - Citi)
+          </div>
+          <div class="project-tags">
+            Production · Java · Spring Boot · MongoDB · Solace
+          </div>
+          <p>
+            Contributed to production-grade microservices handling real banking
+            transaction workflows. Developed Spring Boot REST endpoints with
+            MongoDB persistence, integrated Solace for async event messaging,
+            and maintained CI/CD pipelines with zero-downtime deployments across
+            all environments.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <section id="education">
+      <div class="wrap">
+        <div class="sec-head">
+          <span class="sec-num">04</span>
+          <h2 class="sec-title">Education &amp; Certifications</h2>
+        </div>
+        <div class="two-col">
+          <div>
+            <div class="edu-title">
+              BE — Electrical &amp; Electronics Engineering
+            </div>
+            <div class="edu-sub">
+              Rajalakshmi Engineering College · 2019 – 2023
+            </div>
+            <div class="edu-meta">
+              CGPA: 8.71<br />Coursework: Data Structures &amp; Algorithms, OOP,
+              DBMS, Computer Networks
+            </div>
+          </div>
+          <div>
+            <ul class="cert-list">
+              <li>Oracle Certified Associate (OCA) — Java SE 8 Programmer</li>
+              <li>Problem Solving — Silver Badge, HackerRank</li>
+              <li>Java (Basic) Certificate — HackerRank</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <footer id="contact">
+      <div class="wrap">
+        <div class="contact-row">
+          <a class="pill" href="mailto:akaashk462@gmail.com"
+            >✉ akaashk462@gmail.com</a
+          >
+          <a class="pill" href="tel:+918939812792">☎ +91 89398 12792</a>
+          <a
+            class="pill"
+            href="https://linkedin.com/in/akaash-k-241471203"
+            target="_blank"
+            rel="noopener"
+            >in/akaash-k</a
+          >
+        </div>
+        <div class="fine">Akaash K · Chennai, India</div>
+      </div>
+    </footer>
+  </body>
+</html>
